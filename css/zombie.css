@@ -1,0 +1,119 @@
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(244, 247, 247);
+    background-color: rgb(146, 114, 31);
+    overflow: hidden;
+}
+
+
+
+.pared-arriba
+{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 60px;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+}
+
+
+
+.pared-abajo
+{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 20px;
+}
+
+.pared-izquierda
+{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    width: 20px;
+}
+
+.pared-derecha
+{
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    width: 20px;
+}
+
+
+.color-pared
+{
+    background-color: rgb(24, 26, 33);
+}
+
+.tiempo
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+
+}
+
+.boton-atras
+{
+    padding: 20px;
+    background-color: brown;
+    border-radius: 5px;
+    font-weight: bolder;
+
+}
+
+.jugador
+{
+    z-index: 2;
+    transform: translate(114px, 60px);
+    transition: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+
+}
+
+.fuente
+{
+    font-size: 4rem;
+    font-weight: bolder;
+}
+
+.nover
+{
+    display: none;
+}
+
+
+.ver
+{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+    z-index: 3;
+
+}
+
+.enemigo
+{
+    position: absolute;
+    transform: translate();
+}
+
+.rayos
+{
+    width: 98vw;
+    height: 88vh;
+    z-index: 10;
+
+}

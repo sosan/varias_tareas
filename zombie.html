@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombies</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/zombie.css">
+</head>
+<body>
+    
+    <main>
+        <ul>
+            <li class="pared-arriba color-pared">
+                <button class="boton-atras" id="boton-atras-zombie"><&nbsp;ATRAS</button>
+                <section class="tiempo" id="tiempo">Tiempo: 01:39 Puntuaje: 0</section>
+            </li>
+            <li class="pared-abajo color-pared">
+            </li>
+            <li class="pared-izquierda color-pared">
+            </li>
+            <li class="pared-derecha color-pared">
+            </li>
+        </ul>
+        <img src="./images/zombie/zombie_player.svg" alt="jugador" class="jugador" id="jugador">
+        
+        <section id="zonaenemigos">
+
+        </section>
+        <canvas id="rayos" class="rayos" ></canvas>
+
+        <section id="mensajefinal" >
+            <h1 class="nover fuente" id="finalbien">ENORABUENA!!!!!</h1>
+            <h1 class="nover fuente" id="finalmal">NO LO HAS SUPERADO!!!!!</h1>
+        </section>
+
+    </main>
+    <script src="./js/zombie.js"></script>
+</body>
+</html>
