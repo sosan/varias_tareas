@@ -67,10 +67,10 @@ header
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: flex-end;
     width: 100%;
-
+    gap: 6px;
 }
 
 .ultimasoperaciones

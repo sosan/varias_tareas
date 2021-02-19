@@ -4,6 +4,9 @@ const calculadora = document.getElementById("calculadora");
 //visor de los resultados
 const elementoResultados = document.getElementById("visor");
 
+//pequeño historial
+const elementosHistorial = document.getElementById("ultimasoperaciones");
+
 //boton atras
 document.getElementById("boton-atras").addEventListener("click", () =>
 {
@@ -12,8 +15,8 @@ document.getElementById("boton-atras").addEventListener("click", () =>
 });
 
 
-let sumatorio1 = undefined;
-let sumatorio2 = undefined;
+let sumatorio1 = 0;
+let sumatorio2 = 0;
 
 //listado de numeros donde los guardamos en formato string, 
 let digitosTexto = [];
@@ -112,10 +115,11 @@ const procesarEventos = (idTexto ) =>
 
         if (idTexto === operadores["c"])
         {
-            sumatorio1 = undefined;
-            sumatorio2 = undefined;
+            sumatorio1 = 0;
+            sumatorio2 = 0;
             digitosTexto = [];
             operacion = operadores.ninguna;
+            elementosHistorial.textContent = "";
             verDigitos(digitosTexto.join(""));
             return;
         }
@@ -124,37 +128,43 @@ const procesarEventos = (idTexto ) =>
 
 //------------------------- //rehacer--------------------------
         //demas operaciones
-        if (sumatorio1 === undefined) 
+        if (sumatorio1 === 0) 
         {
             //pasamos de texto a numero
             sumatorio1 = asignarSumatario(digitosTexto.join(""));
             console.log("sumatorio1" + sumatorio1);
         }
 
-        if (sumatorio1 !== undefined && operacion !== "ninguna")
+        if (sumatorio1 !== 0 && operacion !== "ninguna")
         {
             sumatorio2 = asignarSumatario(digitosTexto.join(""));
             console.log("sumatorio2" + sumatorio2);
 
         }
 
-        if (sumatorio1 !== undefined && sumatorio2 !== undefined) 
-        {
-            const resultado = calcularResultado();
-            verResulado(resultado);
-
-            operacion = operadores[idTexto];
-            return;
-        }
-        else 
-        {
-            operacion = operadores[idTexto];
-
-            digitosTexto = [];
-            borrarDigitos();
 
 
-        }
+        operacion = operadores[idTexto];
+        const resultado = calcularResultado(operadores[idTexto]);
+        verResulado(resultado);
+
+        // if (sumatorio1 !== 0 && sumatorio2 !== 0) 
+        // {
+        //     const resultado = calcularResultado();
+        //     verResulado(resultado);
+
+        //     return;
+        // }
+        // else 
+        // {
+        //     operacion = operadores[idTexto];
+
+
+        //     digitosTexto = [];
+        //     // borrarDigitos();
+            
+
+        // }
 
 
     }
@@ -185,6 +195,8 @@ const verDigitos = (numeroTexto) =>
 
     const numeroLocal = (numeroTexto - 0).toLocaleString();
     elementoResultados.textContent = numeroLocal;
+
+    
 
     
 };
@@ -218,11 +230,12 @@ const asignarSumatario = (numeroTexto) =>
 
 //funcion donde realizamos la operacion que nos ha indicado el usuario
 //devolvemos el total
-const calcularResultado = () =>
+const calcularResultado = (currentOperacion) =>
 {
 
     let total = 0;
-    switch (operacion)
+    
+    switch (currentOperacion)
     {
         case operadores["+"]: 
             total = sumatorio1 + sumatorio2;
@@ -267,11 +280,26 @@ const calcularResultado = () =>
 
 };
 
-
 //mostramos el resultado
 const verResulado = (totalNumero) =>
 {
-    elementoResultados.textContent = totalNumero;
+
+
+    // const numeroLocal = (numeroTexto - 0).toLocaleString();
+    // elementoResultados.textContent = numeroLocal;
+
+    elementoResultados.textContent = totalNumero.toLocaleString();
+
+    if (operacion !== operadores.ninguna) 
+    {
+        elementosHistorial.textContent += totalNumero.toLocaleString() + " " + operacion;
+
+    }
+    else 
+    {
+        elementosHistorial.textContent = totalNumero.toLocaleString();
+    }
+
 };
 
 
@@ -283,7 +311,8 @@ const cambiarColorBoton = (key) =>
 
 
     const elemento = document.getElementById(key);
-    if (elemento.classList.contains("boton-cambiado") === false) {
+    if (elemento.classList.contains("boton-cambiado") === false) 
+    {
         elemento.classList.add("boton-cambiado");
     }
     else {
