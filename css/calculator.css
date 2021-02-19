@@ -1,0 +1,125 @@
+html, body 
+{
+    height: 100%;
+}
+
+body
+{
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: grid;
+    /* align-items: center; */
+    justify-items: center;
+
+    height: 100%;
+    color: rgb(244, 247, 247);
+    background-color: rgb(88, 104, 117);
+
+    overflow-x: hidden;
+
+}
+
+header
+{
+    justify-self: flex-start;
+}
+
+.boton-atras
+{
+    padding: 20px;
+    background-color: brown;
+    border-radius: 5px;
+    font-weight: bolder;
+
+}
+
+.calculadora
+{
+
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: 60px repeat(6, 50px);
+    
+    grid-template-areas: 
+    "z z z z"
+    "a b c d"
+    "e f g h"
+    "i j k l"
+    "m n o p"
+    "q r s t"
+    "u v w x"
+    ;
+
+    justify-items: center;
+    /* align-items: center; */
+    gap: 1px;
+    text-align: center;
+    background-color: #1F1F1F;
+    padding: 10px;
+    border: 5px solid #5F5F5F;
+    box-shadow: -6px 5px 20px 4px rgb(0, 0, 0);
+}
+
+.resultado
+{
+    grid-area: z;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+
+}
+
+.ultimasoperaciones
+{
+    font-size: 0.9rem;
+    font-weight: lighter;
+}
+
+.visor
+{
+    
+    font-size: 2rem;
+
+}
+
+.empezar
+{
+    grid-area: a;
+}
+
+
+.boton
+{
+    padding: 15px;
+    width: 49%;
+    width: -webkit-fill-available;
+    background-color: rgb(6, 6, 6);
+    gap: 2px;
+
+    cursor: pointer;
+    user-select: none;
+    
+}
+
+.boton:hover,
+.boton-cambiado
+{
+    background-color: rgb(52, 52, 52);
+}
+
+
+
+.operador
+{
+    background-color: rgb(19, 19, 19);
+}
+
+.digito
+{
+    font-weight: bolder;
+}
+
