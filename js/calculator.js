@@ -67,6 +67,52 @@ let operacion = operadores.ninguna;
 const TIMEOUT_CAMBIO_COLORES = 40;
 
 
+const pulsadoIgual = () =>
+{
+
+    if (sumatorio2 === undefined) {
+        sumatorio2 = asignarSumatario(digitosTexto.join(""));
+        console.log("sumatorio2" + sumatorio2);
+    }
+
+    const resultado = calcularResultado();
+    verResulado(resultado);
+
+
+};
+
+
+const pulsadoBackspace = () =>
+{
+    if (digitosTexto.length <= 0) {
+        return;
+    }
+
+    digitosTexto.pop();
+    verDigitos(digitosTexto.join(""));
+
+};
+
+
+const pulsadoCE = () =>
+{
+    digitosTexto = [];
+    sumatorio1 = 0;
+    verDigitos(digitosTexto.join(""));
+};
+
+const pulsadoC = () =>
+{
+    sumatorio1 = 0;
+    sumatorio2 = 0;
+    digitosTexto = [];
+    operacion = operadores.ninguna;
+    elementosHistorial.textContent = "";
+    verDigitos(digitosTexto.join(""));
+
+};
+
+
 const procesarEventos = (idTexto ) => 
 {
 
@@ -74,55 +120,76 @@ const procesarEventos = (idTexto ) =>
     if (idTexto in operadores === true) 
     {
 
+
+        switch(idTexto)
+        {
+            case operadores["="]:
+                pulsadoIgual();
+            return;
+            
+            case operadores["<"]:
+            case operadores["backspace"]:
+                pulsadoBackspace();
+            return;
+
+            case operadores["ce"]:
+                pulsadoCE();
+            return;
+
+            case operadores["c"]:
+                pulsadoC();
+            return;
+        }
+
         // operacion
         //nos pide el resultado
-        if (idTexto === operadores["="]) 
-        {
+        // if (idTexto === operadores["="]) 
+        // {
 
-            if (sumatorio2 === undefined) 
-            {
-                sumatorio2 = asignarSumatario(digitosTexto.join(""));
-                console.log("sumatorio2" + sumatorio2);
-            }
+        //     if (sumatorio2 === undefined) 
+        //     {
+        //         sumatorio2 = asignarSumatario(digitosTexto.join(""));
+        //         console.log("sumatorio2" + sumatorio2);
+        //     }
 
-            const resultado = calcularResultado();
-            verResulado(resultado);
+        //     const resultado = calcularResultado();
+        //     verResulado(resultado);
 
-            return;
-        }
+        //     return;
+        // }
 
-        if (idTexto === operadores["<"] || idTexto === operadores["backspace"]) 
-        {
-            if (digitosTexto.length <= 0)
-            {
-                return;
-            }
+        // if (idTexto === operadores["<"] || idTexto === operadores["backspace"]) 
+        // {
+        //     if (digitosTexto.length <= 0)
+        //     {
+        //         return;
+        //     }
 
-            digitosTexto.pop();
-            verDigitos(digitosTexto.join(""));
-            return;
+        //     digitosTexto.pop();
+        //     verDigitos(digitosTexto.join(""));
+        //     return;
 
-        }
+        // }
 
-        if (idTexto === operadores["ce"])
-        {
+        // if (idTexto === operadores["ce"])
+        // {
 
-            digitosTexto = [];
-            verDigitos(digitosTexto.join(""));
-            return;
+        //     digitosTexto = [];
+        //     verDigitos(digitosTexto.join(""));
+        //     return;
 
-        }
+        // }
 
-        if (idTexto === operadores["c"])
-        {
-            sumatorio1 = 0;
-            sumatorio2 = 0;
-            digitosTexto = [];
-            operacion = operadores.ninguna;
-            elementosHistorial.textContent = "";
-            verDigitos(digitosTexto.join(""));
-            return;
-        }
+        // if (idTexto === operadores["c"])
+        // {
+        //     sumatorio1 = 0;
+        //     sumatorio2 = 0;
+        //     digitosTexto = [];
+        //     operacion = operadores.ninguna;
+        //     elementosHistorial.textContent = "";
+        //     verDigitos(digitosTexto.join(""));
+        //     return;
+        // }
 
     
 
