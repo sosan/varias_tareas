@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisas</title>
+
+    <link rel="stylesheet" href="./css/divisas.css">
+</head>
+<body>
+    <header>
+        <button class="boton-atras" id="boton-atras">
+            <&nbsp;ATRAS </button>
+    </header>
+
+    <main>
+
+        <h3 id="conversion"></h3>
+
+        <form id="formulario" class="formulario">
+            <label for="importe">Importe</label>
+            <label for="de">De:</label>
+            <label for="a">A:</label>
+            <input type="number" name="importe" id="importe" class="importe" value="" placeholder="10" autocomplete="off">
+            <select name="de" id="de">
+                <option value="pesetas">Pesetas</option>
+                <option value="euros" selected>Euros</option>
+                <option value="dolares">Dolares</option>
+            </select>
+
+            <select name="a" id="a">
+                <option value="pesetas">Pesetas</option>
+                <option value="euros">Euros</option>
+                <option value="dolares" selected>Dolares</option>
+            </select>
+
+            <button type="submit" class="enviar">Enviar</button>
+
+        </form>
+    </main>
+
+    <script src="./js/divisas.js"></script>
+</body>
+</html>

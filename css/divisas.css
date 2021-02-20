@@ -1,0 +1,89 @@
+html, body 
+{
+    height: 100%;
+}
+
+
+
+body
+{
+
+    display: grid;
+    /* align-items: center; */
+    justify-items: center;
+
+    height: 100%;
+    color: rgb(244, 247, 247);
+    background-color: rgb(88, 104, 117);
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+header
+{
+    justify-self: flex-start;
+}
+
+.boton-atras
+{
+    padding: 20px;
+    background-color: brown;
+    border-radius: 5px;
+    font-weight: bolder;
+    color: white;
+
+}
+
+
+.formulario
+{
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+    grid-template-rows: auto auto;
+
+    grid-template-areas: 
+    "a b c"
+    "d e f"
+    "z z z"
+    ;
+
+    text-align: center;
+    gap: 10px;
+
+}
+
+.importe
+{
+    grid-area: d;
+}
+
+.enviar
+{
+    grid-area: z;
+}
+
+input,
+button
+{
+    padding: 10px;
+    border: 1px solid black;
+}
+
+/* ------ QUITAR LAS FLECHAS DE ARRIBA DE LOS INPUTS CON NUMEROS -------------------- */
+/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number]
+{
+    -moz-appearance: textfield;
+}
+/* ------------------------------- */

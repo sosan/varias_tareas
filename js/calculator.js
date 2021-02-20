@@ -479,7 +479,7 @@ document.addEventListener("keyup", (evento) =>
 //tanto digitos como operadores
 document.addEventListener("keydown", (evento) =>
 {
-console.log(evento.key);
+
     if (evento.key.toLowerCase() in listadoDigitos === true)
     {
 
