@@ -43,7 +43,7 @@ const operadores =
     "-": "-",
     "+": "+",
     "+/-": "+/-",
-    ",": ",",
+    
     "=": "=",
     "enter": "=",
     "ninguna": "ninguna",
@@ -67,6 +67,7 @@ const listadoDigitos =
     "8": "8",
     "9": "9",
     "0": "0",
+    ",": "."
 };
 
 
@@ -78,7 +79,7 @@ const TIMEOUT_CAMBIO_COLORES = 40;
 
 let pulsadoIgual = false;
 
-
+//pulsado sobre el =
 const clickIgual = (idTexto) =>
 {
     if (isSumatorio1Completed === false)
@@ -86,15 +87,13 @@ const clickIgual = (idTexto) =>
         return;
     }
 
-    // if (isSumatorio1Completed === true) 
-    // {
-        sumatorio2 = asignarSumatario(digitosTexto.join(""));
-        if (sumatorio2 === 0)
-        {
-            return;
-        }
-        isSumatorio2Completed = true;
-    // }
+    sumatorio2 = asignarSumatario(digitosTexto.join(""));
+    if (sumatorio2 === 0)
+    {
+        return;
+    }
+    isSumatorio2Completed = true;
+
 
     let resultado = calcularResultado(operacionAnterior);
     verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto]);
@@ -113,7 +112,7 @@ const clickIgual = (idTexto) =>
 
 };
 
-
+//borramos un digito
 const clickBackspace = () =>
 {
     if (digitosTexto.length <= 0) {
@@ -125,7 +124,7 @@ const clickBackspace = () =>
 
 };
 
-
+//borramos los digitos
 const clickCE = () =>
 {
     digitosTexto = [];
@@ -142,6 +141,8 @@ const clickCE = () =>
     verDigitos(digitosTexto.join(""));
 };
 
+//funcion donde hemos clickeado en C
+//desaparece historial y operacion
 const clickC = () =>
 {
     sumatorio1 = 0;
@@ -155,7 +156,7 @@ const clickC = () =>
 
 };
 
-
+//funcion donde controlamos si es un digito o un operador
 const procesarEventos = (idTexto ) => 
 {
 
@@ -182,7 +183,6 @@ const procesarEventos = (idTexto ) =>
 
         }
 
-//------------------------- //rehacer--------------------------
         if (pulsadoIgual === true) 
         {
             pulsadoIgual = false;
@@ -201,10 +201,6 @@ const procesarEventos = (idTexto ) =>
                 verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto], true);
 
                 operacionAnterior = operadores[idTexto];
-                // sumatorio2 = 0;
-
-                // digitosTexto = [];
-
                 return;
             }
             isSumatorio2Completed = true;
@@ -213,8 +209,6 @@ const procesarEventos = (idTexto ) =>
         
         if (isSumatorio1Completed === false)
         {
-           
-            
             sumatorio1 = asignarSumatario(digitosTexto.join(""));
             isSumatorio1Completed = true;
         }
@@ -232,8 +226,6 @@ const procesarEventos = (idTexto ) =>
         
         verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto]);
 
-        console.log("sumatorio1" + sumatorio1);
-        // borrarVisor = true;
         operacionAnterior = operadores[idTexto];
         sumatorio1 = resultado;
         sumatorio2 = 0;
@@ -250,8 +242,7 @@ const procesarEventos = (idTexto ) =>
             pulsadoIgual = false;
         }
 
-        
-        insertarDigitos(idTexto);
+        insertarDigitos(listadoDigitos[idTexto]);
 
     }
 
@@ -263,7 +254,16 @@ const insertarDigitos = (idTexto) =>
     if (digitosTexto.length < NUMERO_MAXIMO_ELEMENTOS)
     {
         digitosTexto.push(idTexto);
-        verDigitos(digitosTexto.join(""));
+
+        //en caso de que que haya un decimal, le añadimos al visor una coma
+        if (idTexto === listadoDigitos[","])
+        {
+            elementoResultados.textContent += ",";
+        }
+        else
+        {
+            verDigitos(digitosTexto.join(""));
+        }
 
     }
 
