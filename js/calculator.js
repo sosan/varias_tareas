@@ -81,12 +81,20 @@ let pulsadoIgual = false;
 
 const clickIgual = (idTexto) =>
 {
-
-    if (isSumatorio1Completed === true) 
+    if (isSumatorio1Completed === false)
     {
-        sumatorio2 = asignarSumatario(digitosTexto.join(""));
-        isSumatorio2Completed = true;
+        return;
     }
+
+    // if (isSumatorio1Completed === true) 
+    // {
+        sumatorio2 = asignarSumatario(digitosTexto.join(""));
+        if (sumatorio2 === 0)
+        {
+            return;
+        }
+        isSumatorio2Completed = true;
+    // }
 
     let resultado = calcularResultado(operacionAnterior);
     verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto]);
@@ -96,8 +104,12 @@ const clickIgual = (idTexto) =>
     sumatorio1 = resultado;
     sumatorio2 = 0;
 
+    isSumatorio1Completed = false;
+    isSumatorio2Completed = false;
+
     digitosTexto = [];
 
+    insertarDigitos(sumatorio1.toString());
 
 };
 
@@ -171,19 +183,38 @@ const procesarEventos = (idTexto ) =>
         }
 
 //------------------------- //rehacer--------------------------
+        if (pulsadoIgual === true) 
+        {
+            pulsadoIgual = false;
+        }
+        
 
         if (isSumatorio1Completed === true)
         {
+
             sumatorio2 = asignarSumatario(digitosTexto.join(""));
             if (sumatorio2 === 0)
             {
+                isSumatorio2Completed = false;
+                let resultado = 0;
+                resultado = sumatorio1;
+                verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto], true);
+
+                operacionAnterior = operadores[idTexto];
+                // sumatorio2 = 0;
+
+                // digitosTexto = [];
+
                 return;
             }
             isSumatorio2Completed = true;
-        }
 
+        }
+        
         if (isSumatorio1Completed === false)
         {
+           
+            
             sumatorio1 = asignarSumatario(digitosTexto.join(""));
             isSumatorio1Completed = true;
         }
@@ -215,10 +246,7 @@ const procesarEventos = (idTexto ) =>
         //se ha pulsado el igual y luego un digito
         if (pulsadoIgual === true)
         {
-            
             clickC();
-
-
             pulsadoIgual = false;
         }
 
@@ -332,12 +360,13 @@ const calcularResultado = (currentOperacion) =>
 };
 
 //mostramos el resultado
-const verResulado = (totalNumero, numero1, numero2, operacion) =>
+const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion) =>
 {
 
-
-    // const numeroLocal = (numeroTexto - 0).toLocaleString();
-    // elementoResultados.textContent = numeroLocal;
+    if (operacion === operadores.ninguna)
+    {
+        return;
+    }
 
     elementoResultados.textContent = totalNumero.toLocaleString();
     let historial = elementosHistorial.textContent;
@@ -349,14 +378,14 @@ const verResulado = (totalNumero, numero1, numero2, operacion) =>
     else
     {
         
-        if (operacion !== operadores.ninguna)
+        if (cambiadoOperacion === true)
         {
-            historial += totalNumero.toLocaleString() + " " + operacion;
-            
+            historial = historial.substring(0, historial.length - 1) + " " + operacion;
         }
         else
         {
-            historial = totalNumero.toLocaleString();
+            historial += totalNumero.toLocaleString() + " " + operacion;
+
         }
         
     }
@@ -364,6 +393,7 @@ const verResulado = (totalNumero, numero1, numero2, operacion) =>
 
     if (historial.length > 43)
     {
+        historial = historial.replace("  ", "");
         historial = "..." + historial.substring(historial.length - 43, historial.length);
         
     }
@@ -449,7 +479,7 @@ document.addEventListener("keyup", (evento) =>
 //tanto digitos como operadores
 document.addEventListener("keydown", (evento) =>
 {
-
+console.log(evento.key);
     if (evento.key.toLowerCase() in listadoDigitos === true)
     {
 
