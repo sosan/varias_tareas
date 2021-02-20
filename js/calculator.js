@@ -18,6 +18,13 @@ document.getElementById("boton-atras").addEventListener("click", () =>
 let sumatorio1 = 0;
 let sumatorio2 = 0;
 
+let isSumatorio1Completed = false;
+let isSumatorio2Completed = false;
+
+// let borrarVisor = false;
+
+
+
 //listado de numeros donde los guardamos en formato string, 
 let digitosTexto = [];
 
@@ -38,8 +45,11 @@ const operadores =
     "+/-": "+/-",
     ",": ",",
     "=": "=",
+    "enter": "=",
     "ninguna": "ninguna",
-    "calculadora": "calculadora",
+    // "calculadora": "calculadora",
+    // "ultimasoperaciones": "ultimasoperaciones",
+    // "visor": "visor",
     "backspace": "<"
 };
 
@@ -61,28 +71,38 @@ const listadoDigitos =
 
 
 //variable donde guardamos la ultima operacion que deberemos realizar
-let operacion = operadores.ninguna;
+let operacionAnterior = operadores.ninguna;
 
 //variable con el tiempo para el timeout al cambio de colores
 const TIMEOUT_CAMBIO_COLORES = 40;
 
+let pulsadoIgual = false;
 
-const pulsadoIgual = () =>
+
+const clickIgual = (idTexto) =>
 {
 
-    if (sumatorio2 === undefined) {
+    if (isSumatorio1Completed === true) 
+    {
         sumatorio2 = asignarSumatario(digitosTexto.join(""));
-        console.log("sumatorio2" + sumatorio2);
+        isSumatorio2Completed = true;
     }
 
-    const resultado = calcularResultado();
-    verResulado(resultado);
+    let resultado = calcularResultado(operacionAnterior);
+    verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto]);
+
+    pulsadoIgual = true;
+    operacionAnterior = operadores.ninguna;
+    sumatorio1 = resultado;
+    sumatorio2 = 0;
+
+    digitosTexto = [];
 
 
 };
 
 
-const pulsadoBackspace = () =>
+const clickBackspace = () =>
 {
     if (digitosTexto.length <= 0) {
         return;
@@ -94,19 +114,30 @@ const pulsadoBackspace = () =>
 };
 
 
-const pulsadoCE = () =>
+const clickCE = () =>
 {
     digitosTexto = [];
-    sumatorio1 = 0;
+    if (isSumatorio1Completed === true)
+    {
+        sumatorio1 = 0;
+    }
+
+    if (isSumatorio2Completed === true)
+    {
+        sumatorio2 = 0;
+    }
+
     verDigitos(digitosTexto.join(""));
 };
 
-const pulsadoC = () =>
+const clickC = () =>
 {
     sumatorio1 = 0;
     sumatorio2 = 0;
+    isSumatorio1Completed = false;
+    isSumatorio2Completed = false;
     digitosTexto = [];
-    operacion = operadores.ninguna;
+    operacionAnterior = operadores.ninguna;
     elementosHistorial.textContent = "";
     verDigitos(digitosTexto.join(""));
 
@@ -120,123 +151,80 @@ const procesarEventos = (idTexto ) =>
     if (idTexto in operadores === true) 
     {
 
-
         switch(idTexto)
         {
             case operadores["="]:
-                pulsadoIgual();
+                clickIgual(idTexto);
             return;
-            
             case operadores["<"]:
             case operadores["backspace"]:
-                pulsadoBackspace();
+                clickBackspace();
             return;
-
             case operadores["ce"]:
-                pulsadoCE();
+                clickCE();
             return;
-
             case operadores["c"]:
-                pulsadoC();
+                clickC();
             return;
-        }
-
-        // operacion
-        //nos pide el resultado
-        // if (idTexto === operadores["="]) 
-        // {
-
-        //     if (sumatorio2 === undefined) 
-        //     {
-        //         sumatorio2 = asignarSumatario(digitosTexto.join(""));
-        //         console.log("sumatorio2" + sumatorio2);
-        //     }
-
-        //     const resultado = calcularResultado();
-        //     verResulado(resultado);
-
-        //     return;
-        // }
-
-        // if (idTexto === operadores["<"] || idTexto === operadores["backspace"]) 
-        // {
-        //     if (digitosTexto.length <= 0)
-        //     {
-        //         return;
-        //     }
-
-        //     digitosTexto.pop();
-        //     verDigitos(digitosTexto.join(""));
-        //     return;
-
-        // }
-
-        // if (idTexto === operadores["ce"])
-        // {
-
-        //     digitosTexto = [];
-        //     verDigitos(digitosTexto.join(""));
-        //     return;
-
-        // }
-
-        // if (idTexto === operadores["c"])
-        // {
-        //     sumatorio1 = 0;
-        //     sumatorio2 = 0;
-        //     digitosTexto = [];
-        //     operacion = operadores.ninguna;
-        //     elementosHistorial.textContent = "";
-        //     verDigitos(digitosTexto.join(""));
-        //     return;
-        // }
-
-    
-
-//------------------------- //rehacer--------------------------
-        //demas operaciones
-        if (sumatorio1 === 0) 
-        {
-            //pasamos de texto a numero
-            sumatorio1 = asignarSumatario(digitosTexto.join(""));
-            console.log("sumatorio1" + sumatorio1);
-        }
-
-        if (sumatorio1 !== 0 && operacion !== "ninguna")
-        {
-            sumatorio2 = asignarSumatario(digitosTexto.join(""));
-            console.log("sumatorio2" + sumatorio2);
-
-        }
-
-
-
-        operacion = operadores[idTexto];
-        const resultado = calcularResultado(operadores[idTexto]);
-        verResulado(resultado);
-
-        // if (sumatorio1 !== 0 && sumatorio2 !== 0) 
-        // {
-        //     const resultado = calcularResultado();
-        //     verResulado(resultado);
-
-        //     return;
-        // }
-        // else 
-        // {
-        //     operacion = operadores[idTexto];
-
-
-        //     digitosTexto = [];
-        //     // borrarDigitos();
             
 
-        // }
+        }
 
+//------------------------- //rehacer--------------------------
 
+        if (isSumatorio1Completed === true)
+        {
+            sumatorio2 = asignarSumatario(digitosTexto.join(""));
+            if (sumatorio2 === 0)
+            {
+                return;
+            }
+            isSumatorio2Completed = true;
+        }
+
+        if (isSumatorio1Completed === false)
+        {
+            sumatorio1 = asignarSumatario(digitosTexto.join(""));
+            isSumatorio1Completed = true;
+        }
+        
+        let resultado = 0;
+        if (isSumatorio2Completed === false)
+        {
+            resultado = sumatorio1;
+            
+        }
+        else
+        {
+            resultado = calcularResultado(operacionAnterior);
+        }
+        
+        verResulado(resultado, sumatorio1, sumatorio2, operadores[idTexto]);
+
+        console.log("sumatorio1" + sumatorio1);
+        // borrarVisor = true;
+        operacionAnterior = operadores[idTexto];
+        sumatorio1 = resultado;
+        sumatorio2 = 0;
+        
+        digitosTexto = [];
     }
-    else {
+    else 
+    {
+
+        //se ha pulsado el igual y luego un digito
+        if (pulsadoIgual === true)
+        {
+            
+            clickC();
+
+
+            pulsadoIgual = false;
+        }
+
+        
         insertarDigitos(idTexto);
+
     }
 
 };
@@ -263,17 +251,14 @@ const verDigitos = (numeroTexto) =>
     const numeroLocal = (numeroTexto - 0).toLocaleString();
     elementoResultados.textContent = numeroLocal;
 
-    
-
-    
 };
 
 
 //funcion donde sencillamente el input lo ponemos a 0
-const borrarDigitos = () => 
+const visorCero = () => 
 {
     elementoResultados.textContent = "0";
-
+    elementosHistorial.textContent = "";
 };
 
 
@@ -339,8 +324,7 @@ const calcularResultado = (currentOperacion) =>
     
     }
 
-    sumatorio1 = total;
-    sumatorio2 = undefined;
+    
 
     return total;
 
@@ -348,7 +332,7 @@ const calcularResultado = (currentOperacion) =>
 };
 
 //mostramos el resultado
-const verResulado = (totalNumero) =>
+const verResulado = (totalNumero, numero1, numero2, operacion) =>
 {
 
 
@@ -356,17 +340,35 @@ const verResulado = (totalNumero) =>
     // elementoResultados.textContent = numeroLocal;
 
     elementoResultados.textContent = totalNumero.toLocaleString();
-
-    if (operacion !== operadores.ninguna) 
+    let historial = elementosHistorial.textContent;
+    
+    if (isSumatorio2Completed === true)
     {
-        elementosHistorial.textContent += totalNumero.toLocaleString() + " " + operacion;
-
+        historial += " " + (numero2 - 0).toLocaleString() + " " + operacion;
     }
-    else 
+    else
     {
-        elementosHistorial.textContent = totalNumero.toLocaleString();
+        
+        if (operacion !== operadores.ninguna)
+        {
+            historial += totalNumero.toLocaleString() + " " + operacion;
+            
+        }
+        else
+        {
+            historial = totalNumero.toLocaleString();
+        }
+        
     }
+    
 
+    if (historial.length > 43)
+    {
+        historial = "..." + historial.substring(historial.length - 43, historial.length);
+        
+    }
+    
+    elementosHistorial.textContent = historial;
 };
 
 
@@ -394,6 +396,12 @@ const cambiarColorBoton = (key) =>
 
 };
 
+//funcion que devuelve si esta o no esta dentro
+//del objeto operadores posibles
+const comprobaridTexto = (idTexto) =>
+{
+    return (idTexto in operadores) || (idTexto in listadoDigitos);
+};
 
 //////////////////////////////////////////
 ////////////// EVENTOS
@@ -405,10 +413,19 @@ calculadora.addEventListener("click", (evento) =>
 
     evento.preventDefault();
 
-    const idTexto = evento.target.id;
+    const idTexto = evento.target.id
+    
+    //comprobamos que no sea de alguna excepcion
+    if (comprobaridTexto(idTexto) === false)
+    {
+        return;
+    }    
+    
     procesarEventos(idTexto);
 
 });
+
+
 
 //funcion que controla al soltar la tecla, volver a colocar la clase original
 document.addEventListener("keyup", (evento) =>
