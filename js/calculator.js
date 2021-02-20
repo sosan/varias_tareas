@@ -47,9 +47,6 @@ const operadores =
     "=": "=",
     "enter": "=",
     "ninguna": "ninguna",
-    // "calculadora": "calculadora",
-    // "ultimasoperaciones": "ultimasoperaciones",
-    // "visor": "visor",
     "backspace": "<"
 };
 
