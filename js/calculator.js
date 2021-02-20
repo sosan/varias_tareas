@@ -129,12 +129,12 @@ const clickBackspace = () =>
 const clickCE = () =>
 {
     digitosTexto = [];
-    if (isSumatorio1Completed === true)
+    if (isSumatorio1Completed === false)
     {
         sumatorio1 = 0;
     }
 
-    if (isSumatorio2Completed === true)
+    if (isSumatorio2Completed === false)
     {
         sumatorio2 = 0;
     }
