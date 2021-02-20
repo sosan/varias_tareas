@@ -66,20 +66,22 @@ const calcularDivisas = (conversionDE, conversionA) =>
         return;
     }
     console.log("calcular");
-    let objeto = {};
+    let objetoTemporalDivisas = {};
+
+    let key = "";
 
     switch (conversionDE)
     {
         case valores.dolares:
-            objeto = divisasConversion.dolares;
+            objetoTemporalDivisas = divisasConversion.dolares;
         break;
 
         case valores.euros:
-            objeto = divisasConversion.euros;
+            objetoTemporalDivisas = divisasConversion.euros;
         break;
 
         case valores.pesetas:
-            objeto = divisasConversion.pesetas;
+            objetoTemporalDivisas = divisasConversion.pesetas;
         break;
 
         default: return;
@@ -89,15 +91,15 @@ const calcularDivisas = (conversionDE, conversionA) =>
     switch (conversionA) 
     {
         case valores.dolares:
-            fijo = objeto.dolar;
+            fijo = objetoTemporalDivisas.dolar;
             break;
 
         case valores.euros:
-            fijo = objeto.euro;
+            fijo = objetoTemporalDivisas.euro;
             break;
 
         case valores.pesetas:
-            fijo = objeto.pesetas;
+            fijo = objetoTemporalDivisas.pesetas;
             break;
 
         default: return;
