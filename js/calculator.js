@@ -38,8 +38,9 @@ const operadores =
     "1/x": "1/x", 
     "x2": "x2", 
     "2Vx": "2Vx", 
-    "/": "/", 
-    "X": "X", 
+    "/": "/",
+    "X": "X",
+    "*": "*",
     "-": "-",
     "+": "+",
     "+/-": "+/-",
@@ -344,6 +345,7 @@ const calcularResultado = (currentOperacion) =>
         break;
 
         case operadores["X"]:
+        case operadores["*"]:
             total = sumatorio1 * sumatorio2;
         break;
     
@@ -418,7 +420,16 @@ const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion
 const cambiarColorBoton = (key) => 
 {
 
-    const elemento = document.getElementById(key);
+    let elemento = undefined;
+    if (key === operadores["*"])
+    {
+        elemento = document.getElementById("X");
+    }
+    else
+    {
+        elemento = document.getElementById(key);
+    }
+
 
     if (elemento.classList.contains("boton-cambiado") === false) 
     {
@@ -455,6 +466,7 @@ calculadora.addEventListener("click", (evento) =>
 
     evento.preventDefault();
 
+    
     const idTexto = evento.target.id
     
     //comprobamos que no sea de alguna excepcion
@@ -491,6 +503,7 @@ document.addEventListener("keyup", (evento) =>
 //tanto digitos como operadores
 document.addEventListener("keydown", (evento) =>
 {
+    console.log(evento);
 
     if (evento.key.toLowerCase() in listadoDigitos === true)
     {
@@ -505,7 +518,15 @@ document.addEventListener("keydown", (evento) =>
 
     if (evento.key.toLowerCase() in operadores === true)
     {
-        procesarEventos(operadores[evento.key.toLowerCase()]);
+        if (evento.key.toLowerCase() === operadores["*"])
+        {
+            procesarEventos(operadores.X);
+        }
+        else
+        {
+            procesarEventos(operadores[evento.key.toLowerCase()]);
+
+        }
     }
 
 });
