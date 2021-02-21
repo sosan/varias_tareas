@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UTonomo</title>
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/autonomo.css">
+
+    <!-- cambio de fuente google font -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet"> -->
+
 </head>
 <body>
-    
-    
+    <header>
+        <button class="boton-atras" id="boton-atras">
+            <&nbsp;ATRAS </button>
+    </header>
+    <main>
+        <section id="reloj" class="reloj-completo">
+            <h1 class="titulo">UTonomo</h1>
+            <figure class="reloj-contenedor">
+                <img src="./images/autonomo/circulo.svg" class="imagen-circulo" alt="">
+                <figcaption class="texto-centrado">
+                    <p class="tiempo-total-texto">TIEMPO ACUMLUADO</p>
+                    <p id="tiempo-total" class="tiempo-total-texto">00:00:00</p>
+                    <p id="tiempo-actual" class="tiempo-actual-texto">00:00:00</p>
+                    <button id="boton-terminar" class="tiempo-terminar" disabled>TERMINAR SESION</button>
+                    <button id="boton-start" class="tiempo-start">EMPEZAR</button>
+                </figcaption>
+            </figure>
+        </section>
+        <section id="estadisticas">
+            <ul class="tabla-estadisticas" id="tabla-estadisticas">
+            </ul>
+        </section>
+        <section id="settings">
+
+        </section>
+    </main>
 
 
     <script src="./js/autonomo.js"></script>
