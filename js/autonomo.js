@@ -114,7 +114,8 @@ const empezarCuentaAdelante = () =>
 
     let tiempo = new Date(2021, 4, 4, 0, 0, 0);
     let segundos = 0;
-
+    let sec = tiempoAcumulado.getSeconds();
+    
     timer = setInterval( () => 
     {
         if (isRunning === true)
@@ -123,8 +124,8 @@ const empezarCuentaAdelante = () =>
             tiempo.setSeconds(segundos);
             tiempoActual.textContent = tiempo.getHours().toString().padStart(2, "00") + ":" + tiempo.getMinutes().toString().padStart(2, "00") + ":" + tiempo.getSeconds().toString().padStart(2, "00") ;
             tiempoSessionTemporal = tiempoActual.textContent;
-
-            tiempoAcumulado.setSeconds(segundos);
+            
+            tiempoAcumulado.setSeconds(sec + segundos);
             tiempoTotal.textContent = tiempoAcumulado.getHours().toString().padStart(2, "00") + ":" + tiempoAcumulado.getMinutes().toString().padStart(2, "00") + ":" + tiempoAcumulado.getSeconds().toString().padStart(2, "00");
 
         }
@@ -143,8 +144,9 @@ const anadirElementoEstadistica = () =>
 
     let ahora = Date().split(" ");
 
-    subelementop.textContent = ahora[2] + " " + ahora[1] + " " + " " + ahora[3] +  " " + tiempoSessionTemporal;
-    subelementop.textContent = `${ahora[2]} ${ahora[1]} ${ahora[3]} ${ahora[4]} = TIEMPO ${tiempoSessionTemporal}`;
+    // subelementop.textContent = ahora[2] + " " + ahora[1] + " " + " " + ahora[3] +  " " + tiempoSessionTemporal;
+    const acumuladoTexto = `${tiempoAcumulado.getHours().toString().padStart(2, "00")}:${tiempoAcumulado.getMinutes().toString().padStart(2, "00")}:${tiempoAcumulado.getSeconds().toString().padStart(2, "00")}`;
+    subelementop.textContent = `${ahora[2]} ${ahora[1]} ${ahora[3]} ${ahora[4]} = ACUMULADO ${acumuladoTexto} = TIEMPO ${tiempoSessionTemporal}`;
     nuevoelemento.appendChild(subelementop);
 
 
@@ -198,17 +200,17 @@ botonEmpezar.addEventListener('click', () =>
 });
 
 
-
+//funcion dodne termina la sesion y añadimos el acumulado de tiempo
 botonTerminarSesion.addEventListener('click', () => 
 {
 
-
     isRunning = false;
+    clearInterval(timer);
+
     tiempoActual.textContent = "00:00:00";
     botonEmpezarEstado = estados.empezar;
     botonEmpezar.textContent = "EMPEZAR";
 
-    clearInterval(timer);
     ocultarBotonTerminarSesion();
 
     anadirElementoEstadistica();
