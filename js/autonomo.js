@@ -23,6 +23,12 @@ let botonEmpezarEstado = estados.empezar;
 let tiempoSessionTemporal = "";
 
 
+//boton atras
+document.getElementById("boton-atras").addEventListener("click", () => {
+    window.history.go(-1);
+
+});
+
 //funcion generica para animaar botones
 //recibe como parametros el elemento y la duracion
 //el elemnto tiene que tener la propiedad opacity
