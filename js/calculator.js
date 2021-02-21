@@ -161,6 +161,7 @@ const procesarEventos = (idTexto ) =>
     if (idTexto in operadores === true) 
     {
 
+        //segun que operador hayan hecho click
         switch(idTexto)
         {
             case operadores["="]:
@@ -184,7 +185,6 @@ const procesarEventos = (idTexto ) =>
         {
             pulsadoIgual = false;
         }
-        
 
         if (isSumatorio1Completed === true)
         {
@@ -239,12 +239,18 @@ const procesarEventos = (idTexto ) =>
             pulsadoIgual = false;
         }
 
+        //insertamos digitos al array con los digitos introducidos
         insertarDigitos(listadoDigitos[idTexto]);
 
     }
 
 };
 
+
+// añadismos cada digito que ha pulsado el usario
+// a una lista de elementos en formato string ["1", "2", "3"]
+// al mostrarlo por el visor realizamos un join al array
+// al haber un decimal, mostramos por el visor el decimal
 const insertarDigitos = (idTexto) =>
 {
 
@@ -323,6 +329,9 @@ const calcularResultado = (currentOperacion) =>
         break;
         
         case operadores["/"]:
+            //comprobacion que no se puede dividir por 0
+            //podriamos lanzar un mensaje de error pero mostramos
+            //intencionadamente un 0
             if (sumatorio2 === 0)
             {
                 total = 0;
@@ -349,14 +358,16 @@ const calcularResultado = (currentOperacion) =>
     
     }
 
-    
-
     return total;
 
 
 };
 
-//mostramos el resultado
+//mostramos el resultado de la operacion por el visor
+// controlamos que puedan cambiarnos el operador
+// controlamos que si pulsan varias veces el mismo operador no realice nada
+// mostramos el resultado por el visor
+// mostramos el historial de operaciones con un limite de tamaño
 const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion) =>
 {
 
@@ -374,7 +385,8 @@ const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion
     }
     else
     {
-        
+        //si el usuario ha realizado un cambio de operador
+        //modificamos el historial
         if (cambiadoOperacion === true)
         {
             historial = historial.substring(0, historial.length - 1) + " " + operacion;
@@ -386,15 +398,16 @@ const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion
         }
         
     }
-    
 
+    //control de tamaño al historial
     if (historial.length > 43)
     {
         historial = historial.replace("  ", "");
         historial = "..." + historial.substring(historial.length - 43, historial.length);
         
     }
-    
+
+    //mostramos el historial de operaciones
     elementosHistorial.textContent = historial;
 };
 
@@ -405,15 +418,17 @@ const verResulado = (totalNumero, numero1, numero2, operacion, cambiadoOperacion
 const cambiarColorBoton = (key) => 
 {
 
-
     const elemento = document.getElementById(key);
+
     if (elemento.classList.contains("boton-cambiado") === false) 
     {
         elemento.classList.add("boton-cambiado");
     }
     else {
         //para hacerlo un poco mas visual, se para un poco al cambiar el color
-        const timeout = setTimeout(() => {
+        //animacion
+        const timeout = setTimeout(() => 
+        {
             
             elemento.classList.remove("boton-cambiado");
             clearTimeout(timeout);

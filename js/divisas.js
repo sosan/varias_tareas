@@ -15,20 +15,20 @@ document.getElementById("boton-atras").addEventListener("click", () => {
 const divisasConversion = {
     "euros":
     {
-        "euro": 1,
-        "dolar": 1.2116823874653,
+        "euros": 1,
+        "dolares": 1.2116823874653,
         "pesetas": 166.38599999998
     },
     "dolares":
     {
-        "euro": 0.8252987832,
-        "dolar": 1,
+        "euros": 0.8252987832,
+        "dolares": 1,
         "pesetas": 137.3181633415
     },
     "pesetas":
     {
-        "euro": 0.0060101210438385,
-        "dolar": 0.0072823578153538,
+        "euros": 0.0060101210438385,
+        "dolares": 0.0072823578153538,
         "pesetas": 1
     }
 
@@ -45,6 +45,30 @@ const valores = {
 //colocamos foco en el importe
 elementoImporte.focus();
 
+const calcularDivisas = (conversionDE, conversionA) =>
+{
+    let importe = elementoImporte.value - 0;
+
+    if (importe === 0)
+    {
+        return;
+    }
+
+    const fijo = divisasConversion[conversionDE][conversionA];
+
+    if (fijo === undefined)
+    {
+        console.log("errror conversion" + fijo);
+        return;
+    }
+
+    const total = importe * fijo;
+    conversion.textContent = "Conversion de " + importe.toLocaleString() + " " + valores[elementoDE.value] + " a " + valores[elementoA.value] + " es de: " + total.toLocaleString() + " " + valores[elementoA.value];
+
+
+    elementoImporte.focus();
+
+};
 
 
 
@@ -57,68 +81,11 @@ elementoFormulario.addEventListener("submit", (evento) =>
 });
 
 
-const calcularDivisas = (conversionDE, conversionA) =>
-{
-    let importe = elementoImporte.value - 0;
-
-    if (importe === 0)
-    {
-        return;
-    }
-    console.log("calcular");
-    let objetoTemporalDivisas = {};
-
-    let key = "";
-
-    switch (conversionDE)
-    {
-        case valores.dolares:
-            objetoTemporalDivisas = divisasConversion.dolares;
-        break;
-
-        case valores.euros:
-            objetoTemporalDivisas = divisasConversion.euros;
-        break;
-
-        case valores.pesetas:
-            objetoTemporalDivisas = divisasConversion.pesetas;
-        break;
-
-        default: return;
-    }
-
-    let fijo = 0;
-    switch (conversionA) 
-    {
-        case valores.dolares:
-            fijo = objetoTemporalDivisas.dolar;
-            break;
-
-        case valores.euros:
-            fijo = objetoTemporalDivisas.euro;
-            break;
-
-        case valores.pesetas:
-            fijo = objetoTemporalDivisas.pesetas;
-            break;
-
-        default: return;
-    }
-
-    const total = importe * fijo;
-    conversion.textContent = "Conversion de " + importe.toLocaleString() + " " + valores[elementoDE.value] + " a " + valores[elementoA.value] + " es de: " + total.toLocaleString() + " " + valores[elementoA.value];
-
-
-    elementoImporte.focus();
-
-};
-
-
 document.addEventListener("keydown", (evento) => {
 
     if (evento.key.toLowerCase() === "enter")
     {
-        calcularDivisas();
+        calcularDivisas(valores[elementoDE.value], valores[elementoA.value]);
     }
 
 

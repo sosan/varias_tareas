@@ -12,6 +12,7 @@ let cuentaAdelanteEmpezada = false;
 let tiempoAcumulado = new Date(2021, 4, 4, 0, 0, 0);
 let timer = undefined;
 
+//estados en los que puede estar los botones
 const estados = {
     empezar: "empezar",
     pausado: "pausado",
@@ -114,7 +115,7 @@ const ocultarBotonTerminarSesion = () =>
 };
 
 
-
+//funcion donde realiza la cuenta hacia delante
 const empezarCuentaAdelante = () =>
 {
 
@@ -122,15 +123,19 @@ const empezarCuentaAdelante = () =>
     let segundos = 0;
     let sec = tiempoAcumulado.getSeconds();
     
+    //cada segundo
     timer = setInterval( () => 
     {
         if (isRunning === true)
         {
             segundos++;
+            //set el tiempo a los segundos y el mismo se recalcula a las horas / minutos que tocan
             tiempo.setSeconds(segundos);
+            //mostramos el texto en formato 00:00:00 dos digitos
             tiempoActual.textContent = tiempo.getHours().toString().padStart(2, "00") + ":" + tiempo.getMinutes().toString().padStart(2, "00") + ":" + tiempo.getSeconds().toString().padStart(2, "00") ;
             tiempoSessionTemporal = tiempoActual.textContent;
             
+            //tiempo acumulado
             tiempoAcumulado.setSeconds(sec + segundos);
             tiempoTotal.textContent = tiempoAcumulado.getHours().toString().padStart(2, "00") + ":" + tiempoAcumulado.getMinutes().toString().padStart(2, "00") + ":" + tiempoAcumulado.getSeconds().toString().padStart(2, "00");
 
@@ -140,30 +145,35 @@ const empezarCuentaAdelante = () =>
 
 };
 
+
+//listamos las sesiones
 const anadirElementoEstadistica = () =>
 {
     
+    //creamos el elemento li
     let nuevoelemento = document.createElement("li");
     nuevoelemento.className = "elemento-estadisticas";
+    //creamos el p
     let subelementop = document.createElement("p");
     subelementop.className = "texto-estadisticas";
 
     let ahora = Date().split(" ");
-
-    // subelementop.textContent = ahora[2] + " " + ahora[1] + " " + " " + ahora[3] +  " " + tiempoSessionTemporal;
+    
+    //mostrmos la informacion
     const acumuladoTexto = `${tiempoAcumulado.getHours().toString().padStart(2, "00")}:${tiempoAcumulado.getMinutes().toString().padStart(2, "00")}:${tiempoAcumulado.getSeconds().toString().padStart(2, "00")}`;
     subelementop.textContent = `${ahora[2]} ${ahora[1]} ${ahora[3]} ${ahora[4]} = ACUMULADO ${acumuladoTexto} = TIEMPO ${tiempoSessionTemporal}`;
+    
+    //añadimos subelemento p
     nuevoelemento.appendChild(subelementop);
 
-
+    //añadmimos antes del primer li asi queda las sesiones mas recientes arriba del listado
     tablaEstadisticas.insertBefore(nuevoelemento, tablaEstadisticas.childNodes[0]);
 
 };
 
-
+/////////////////////////////////////////
 /////evnetos
-
-
+///////////////////////////////////////////
 botonEmpezar.addEventListener('click', () => 
 {
 
