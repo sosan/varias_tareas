@@ -11,9 +11,11 @@ https://sosan.github.io/varias_tareas/
 # Calculator
 ![Imagen](images/muestra_calculator.webp)
 
-# Divisas
-![Imagen](images/muestra_divisas.webp)
+# Utonomo
+![Imagen](images/muestra_autonomo.webp)
 
 # Zombie
 ![Imagen](images/muestra_zombie.webp)
 
+# Divisas (es mas sencillo)
+![Imagen](images/muestra_divisas.webp)
